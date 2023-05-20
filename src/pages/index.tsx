@@ -96,7 +96,6 @@ export default function HeroContentLeft() {
         opacity={1}
         zIndex={0}
       />
-      <Navbar />
       <Container className={classes.container}>
         <Title className={classes.title}>Pawfect Sitters</Title>
         <Text className={classes.description} size="xl" mt="xl">
