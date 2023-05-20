@@ -1,4 +1,5 @@
-import { createStyles, Overlay, Container, Title, Button, Text, rem } from '@mantine/core';
+import { createStyles, Overlay, Container, Title, Button, Text, rem, ButtonProps, Group  } from '@mantine/core';
+import Head from 'next/head';
 
 const useStyles = createStyles((theme) => ({
   hero: {
@@ -59,13 +60,34 @@ const useStyles = createStyles((theme) => ({
       width: '100%',
     },
   },
+
+  buttonContainer:{display:'flex', justifyContent:'row', width:'100%'},
+  button:{
+    width:'20%',
+
+    },
 }));
+
+export function SitterButton(props: ButtonProps & React.ComponentPropsWithoutRef<'a'>) {
+  return (
+    <Button
+      component="a"
+      variant="default"
+      {...props}
+    />
+  );
+}
 
 export default function HeroContentLeft() {
   const { classes } = useStyles();
 
   return (
+
+
     <div className={classes.hero}>
+      <Head>
+        <title>Pawfect Sitters</title>
+      </Head>
       <Overlay
         gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)"
         opacity={1}
@@ -78,9 +100,11 @@ export default function HeroContentLeft() {
           more than 120 customizable components and hooks to cover you in any situation
         </Text>
 
-        <Button variant="gradient" size="xl" radius="xl" className={classes.control}>
-          Get started
-        </Button>
+        <div className={classes.buttonContainer}>
+          <SitterButton className={classes.button}>
+            Sitter
+          </SitterButton>
+        </div>
       </Container>
     </div>
   );
