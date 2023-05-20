@@ -1,4 +1,5 @@
 import { createStyles, Overlay, Container, Title, Button, Text, rem } from '@mantine/core';
+import Navbar from '../../components/Navbar';
 
 const useStyles = createStyles((theme) => ({
   hero: {
@@ -65,12 +66,13 @@ export default function HeroContentLeft() {
   const { classes } = useStyles();
 
   return (
-    <div className={classes.hero}>
+    <div>
       <Overlay
         gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)"
         opacity={1}
         zIndex={0}
       />
+      <Navbar />
       <Container className={classes.container}>
         <Title className={classes.title}>Pawfect Sitters</Title>
         <Text className={classes.description} size="xl" mt="xl">
