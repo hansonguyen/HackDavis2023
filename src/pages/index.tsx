@@ -102,7 +102,7 @@ export default function HeroContentLeft() {
 
         <div className={classes.buttonContainer}>
           <SitterButton className={classes.button}>
-            Sitter
+            Login
           </SitterButton>
         </div>
       </Container>
