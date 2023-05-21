@@ -15,6 +15,9 @@ import {
   rem,
   Modal
 } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { Pet } from '../petdisplay';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -55,6 +58,22 @@ interface BadgeCardProps {
 export function BadgeCard({ image, title, description, country, badges }: BadgeCardProps) {
   const { classes, theme } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
+  const [pet, setPet] = useState<Pet>()
+  const router = useRouter()
+  const id = router.query['id']
+  useEffect(() => {
+    const fetchPets = async () => {
+    try {
+        const response = await fetch(`http://localhost:4000/api/pets/${id}`);
+        const data = await response.json();
+        setPet(data);
+    } catch (error) {
+        console.error("Error fetching pet:", error);
+    }
+    };  
+
+    fetchPets();
+  }, [router]);
   const features = badges && badges.map((badge) => (
     <Badge
       color={theme.colorScheme === 'dark' ? 'dark' : 'gray'}
@@ -66,14 +85,15 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
   ));
 
   return (
+    pet && 
     <div>
 
-      <h1> &#160;Connect with </h1>
+      <h1> &#160;Connect with {pet.name}</h1>
       
       <Card withBorder radius="lg" p="md" className={classes.card} sx={{ display: "flex", gap: "5rem" }}>
 
       <Card.Section>
-        <Image src={image} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/>
+        <Image src={pet.images[0]} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/>
       </Card.Section> 
     
       <Card.Section className={classes.section} mt="md">
@@ -84,29 +104,29 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
         </Group>
         
         <Text fz="md" mt="xs">
-          {description} Name:
+          {description} Name: {pet.name}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Age:
+          {description} Age: {pet.age}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Breed:
+          {description} Breed: {pet.breed}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Pet Sitting Duration:
+          {description} Pet Sitting Duration: {pet.numDays}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Location:
+          {description} Location: {pet.location}
         </Text>
       </Card.Section>
 
       <Card.Section className={classes.section} mt="lrg">  
         <Text fz="md" mt="xs" sx={{ paddingTop: '15rem', marginLeft: -464 }}>
-          {description} Description:
+          {description} Description: {pet.description}
         </Text>
       </Card.Section>
       
@@ -115,29 +135,26 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
           <h3>Let the Owner Know You're Interested!</h3>
           <p>Send the owner a message to let them know you'd like to help.</p>
         </div>
-        <div style={{ display: 'flex', flexDirection: "column"}}>
-          <p>Name:</p>
+        <div style={{ display: 'flex', flexDirection: "column", alignItems: "stretch"}}>
           <Input
+            icon={<IconAt />}
             placeholder="Name"
             radius="xl"
             size="md"/>
-          <p>Email:</p>
+
             <Input
+            icon={<IconAt />}
             placeholder="Email"
             radius="xl"
             size="md"/>
-          <p>Message:</p>
+
             <Input
+            icon={<IconAt />}
             placeholder="Message"
             radius="xl"
             size="md"/>
-          <p></p>
         </div>
-        <Group mt="xs" sx = {{ justifyContent: 'center', alignItems: "flex-end"}}>
-        <Button radius="md" style={{ flex: 1 }} onClick={close}>
-          Send Message
-        </Button>
-      </Group>  
+        
       </Modal>
 
       <Group mt="xs" sx = {{ justifyContent: 'center', alignItems: "flex-end"}}>
