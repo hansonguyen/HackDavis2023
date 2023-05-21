@@ -21,6 +21,7 @@ import { Inter } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export interface Pet {
+  _id: string;
   species: string;
   breed: string;
   description: string;
@@ -185,7 +186,7 @@ export default function NextPage() {
       p="md"
       radius="md"
       component="a"
-      href="#"
+      href={`${pet._id}`}
       className={classes.card}
     >
       <HeartOutline
