@@ -15,9 +15,8 @@ export default function User() {
     const { classes } = useStyles();
     return (
       <div className={classes.container}>
-       
         
-        </div>
+      </div>
     )
   }
   

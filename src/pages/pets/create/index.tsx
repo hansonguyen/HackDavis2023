@@ -87,7 +87,7 @@ export default function CreateListing() {
                 method: 'POST'
             })
             console.log('Submitted Listing')
-            router.push('/')
+            router.push('/petdisplay')
         } catch (error) {
             console.log(error)
         }

@@ -16,6 +16,7 @@ import { Transition, NumberInput } from "@mantine/core";
 import { speciesData, locationData } from "../pets/create/index";
 
 export interface Pet {
+  _id: string;
   species: string;
   breed: string;
   description: string;
@@ -178,7 +179,7 @@ export default function NextPage() {
       p="md"
       radius="md"
       component="a"
-      href="#"
+      href={`${pet._id}`}
       className={classes.card}
     >
       <HeartOutline
