@@ -6,6 +6,7 @@ function Navbar() {
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
+
     return (
         <Header height={rem(84)}>
             {!user && <a href="/api/auth/login">Login</a>}
