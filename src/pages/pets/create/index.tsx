@@ -23,7 +23,7 @@ import { useRouter } from 'next/router'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import Navbar from '../../../../components/Navbar'
 
-const speciesData = [
+export const speciesData = [
     { value: 'Dog', label: 'Dog' },
     { value: 'Cat', label: 'Cat' },
     { value: 'Fish', label: 'Fish' },
@@ -33,7 +33,7 @@ const speciesData = [
     { value: 'Rat', label: 'Rat' }
 ]
 
-const locationData = [
+export const locationData = [
     { value: 'North Davis', label: 'North Davis' },
     { value: 'South Davis', label: 'South Davis' },
     { value: 'West Davis', label: 'West Davis' },
