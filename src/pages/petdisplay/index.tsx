@@ -6,6 +6,7 @@ import {
 import {SimpleGrid, Card, Text, Container, AspectRatio } from '@mantine/core';
 import { TextInput, TextInputProps, ActionIcon, useMantineTheme } from '@mantine/core';
 import { IconSearch, IconArrowRight, IconArrowLeft } from '@tabler/icons-react';
+import Navbar from '../../../components/Navbar';
 
 
 interface Pet {
@@ -109,12 +110,14 @@ export default function NextPage() {
   }, []);
 
   return (
-    <Container py="xl">
-      
-      <PetSearch/>
-      <SimpleGrid cols={5} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
-        {cards}
-      </SimpleGrid>
-    </Container>
+    <div>
+      <Navbar />
+      <Container py="xl">
+        <PetSearch/>
+        <SimpleGrid cols={5} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+          {cards}
+        </SimpleGrid>
+      </Container>
+    </div>
   );
 }
