@@ -67,7 +67,7 @@ export default function Home() {
         </Text>
       </div>
       <button className={classes.button} type="button" onClick={nav}>
-        Click Me!
+        Get Started!
       </button>
     </div>
   );

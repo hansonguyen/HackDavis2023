@@ -9,11 +9,11 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconSearch, IconArrowRight, IconArrowLeft } from "@tabler/icons-react";
-import { HeartOutline, ReorderThreeOutline} from "react-ionicons";
+import { HeartOutline, ReorderThreeOutline } from "react-ionicons";
 import Navbar from "../../../components/Navbar";
-import { MultiSelect } from '@mantine/core';
-import { Transition, NumberInput } from '@mantine/core';
-import {speciesData, locationData} from '../pets/create/index'
+import { MultiSelect } from "@mantine/core";
+import { Transition, NumberInput } from "@mantine/core";
+import { speciesData, locationData } from "../pets/create/index";
 
 export interface Pet {
   species: string;
@@ -26,7 +26,6 @@ export interface Pet {
   age: number;
 }
 
-
 export interface FiltersFace {
   species: string[];
   breed: string[];
@@ -36,8 +35,6 @@ export interface FiltersFace {
   maxAge: number;
   location: string[];
 }
-
-
 
 const useStyles = createStyles((theme) => ({
   image: {
@@ -68,15 +65,20 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    alignContent:"center",
+    alignContent: "center",
     width: "125%",
   },
-  searchBar:{
-    width:"90%"
+  searchBar: {
+    width: "90%",
   },
-  filterContainer:{
-    padding:"5%"
-  }
+  filterContainer: {
+    padding: "5%",
+  },
+
+  container: {
+    backgroundImage: "linear-gradient(to right, #FFEBB9, white)",
+    height: "100vh",
+  },
 }));
 
 export interface PetSearchProps extends TextInputProps {
@@ -138,9 +140,7 @@ export default function NextPage() {
         );
       }
       if (filters.breed.length > 0) {
-        filtered = filtered.filter((pet) =>
-          filters.breed.includes(pet.breed)
-        );
+        filtered = filtered.filter((pet) => filters.breed.includes(pet.breed));
       }
       if (filters.minAge > 0) {
         filtered = filtered.filter((pet) => pet.age >= filters.minAge);
@@ -164,7 +164,7 @@ export default function NextPage() {
 
     filterPets();
   }, [pets, filters]);
-  
+
   const handleSearch = (searchValue: string) => {
     const filtered = pets.filter((pet) =>
       pet.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -199,8 +199,6 @@ export default function NextPage() {
     </Card>
   ));
 
-
-
   useEffect(() => {
     const fetchPets = async () => {
       try {
@@ -217,87 +215,104 @@ export default function NextPage() {
   }, []);
 
   return (
-    <div>
+    <div className={classes.container}>
       <Navbar />
       <Container py="xl">
-        
         <div className={classes.searchFilterContainer}>
           <PetSearch onSearch={handleSearch} />
           <ReorderThreeOutline
-          onClick={() => {
-            setIsToggled(!isToggled);
-          }} 
-          height="15%"
-          width="15%"/>
+            onClick={() => {
+              setIsToggled(!isToggled);
+            }}
+            height="15%"
+            width="15%"
+          />
         </div>
 
-        {isToggled &&  
-          <Transition mounted={isToggled} transition="slide-up" duration={500} timingFunction="ease">
-            {(styles) => 
-            <div className={classes.filterContainer} style={styles}>
+        {isToggled && (
+          <Transition
+            mounted={isToggled}
+            transition="slide-up"
+            duration={500}
+            timingFunction="ease"
+          >
+            {(styles) => (
+              <div className={classes.filterContainer} style={styles}>
                 <MultiSelect
-                data={speciesData}
-                label="Species"
-                searchable
-                placeholder="Pick species"
-                value={filters.species}
-                color="yellow"
-                onChange={(value) => setFilters({ ...filters, species: value })}
+                  data={speciesData}
+                  label="Species"
+                  searchable
+                  placeholder="Pick species"
+                  value={filters.species}
+                  color="yellow"
+                  onChange={(value) =>
+                    setFilters({ ...filters, species: value })
+                  }
                 />
 
                 <MultiSelect
-                data={locationData}
-                label="Location"
-                placeholder="Pick area"
-                value={filters.location}
-                onChange={(value) => setFilters({ ...filters, location: value })}
+                  data={locationData}
+                  label="Location"
+                  placeholder="Pick area"
+                  value={filters.location}
+                  onChange={(value) =>
+                    setFilters({ ...filters, location: value })
+                  }
                 />
 
-              <div>
-                <Grid gutter="sm">
-                  <Grid.Col span={6}>
-                    <NumberInput
-                      label="Min Days"
-                      value={filters.minDays}
-                      onChange={(value) => setFilters({ ...filters, minDays: Number(value) })}
-                      size="sm"
-                    />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <NumberInput
-                      label="Max Days"
-                      value={filters.maxDays}
-                      onChange={(value) => setFilters({ ...filters, maxDays: Number(value) })}
-                      size="sm"
-                    />
-                  </Grid.Col>
-                </Grid>
-              </div>
+                <div>
+                  <Grid gutter="sm">
+                    <Grid.Col span={6}>
+                      <NumberInput
+                        label="Min Days"
+                        value={filters.minDays}
+                        onChange={(value) =>
+                          setFilters({ ...filters, minDays: Number(value) })
+                        }
+                        size="sm"
+                      />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                      <NumberInput
+                        label="Max Days"
+                        value={filters.maxDays}
+                        onChange={(value) =>
+                          setFilters({ ...filters, maxDays: Number(value) })
+                        }
+                        size="sm"
+                      />
+                    </Grid.Col>
+                  </Grid>
+                </div>
 
-              <div>
-                <Grid gutter="sm">
-                  <Grid.Col span={6}>
-                    <NumberInput
-                      label="Min Age (months)"
-                      value={filters.minAge}
-                      onChange={(value) => setFilters({ ...filters, minAge: Number(value) })}
-                      size="sm"
-                    />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <NumberInput
-                      label="Max Age"
-                      value={filters.maxAge}
-                      onChange={(value) => setFilters({ ...filters, maxAge: Number(value) })}
-                      size="sm"
-                    />
-                  </Grid.Col>
-                </Grid>
+                <div>
+                  <Grid gutter="sm">
+                    <Grid.Col span={6}>
+                      <NumberInput
+                        label="Min Age (months)"
+                        value={filters.minAge}
+                        onChange={(value) =>
+                          setFilters({ ...filters, minAge: Number(value) })
+                        }
+                        size="sm"
+                      />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                      <NumberInput
+                        label="Max Age"
+                        value={filters.maxAge}
+                        onChange={(value) =>
+                          setFilters({ ...filters, maxAge: Number(value) })
+                        }
+                        size="sm"
+                      />
+                    </Grid.Col>
+                  </Grid>
+                </div>
               </div>
-
-            </div>
-            }
-          </Transition>}
+            )}
+          </Transition>
+        )}
         <SimpleGrid cols={5} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
           {cards}
         </SimpleGrid>
