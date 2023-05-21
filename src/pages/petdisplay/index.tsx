@@ -69,10 +69,10 @@ const useStyles = createStyles((theme) => ({
   },
   searchFilterContainer: {
     display: "flex",
-    alignItems: "center",
+    msAlignSelf: "center",
     justifyContent: "center",
     alignContent: "center",
-    width: "125%",
+    width: "100%",
   },
   searchBar: {
     width: "90%",
@@ -80,12 +80,12 @@ const useStyles = createStyles((theme) => ({
   },
   filterContainer: {
     padding: "5%",
+    height:"200vh"
   },
 
   container: {
     backgroundImage: "linear-gradient(to right, #FFEBB9, white)",
-
-    height: "100vh",
+    height: "200vh",
   },
 }));
 
@@ -228,14 +228,16 @@ export default function NextPage() {
       <Container py="xl">
         <div className={classes.searchFilterContainer}>
           <PetSearch onSearch={handleSearch} />
-          <ReorderThreeOutline
-            onClick={() => {
-              setIsToggled(!isToggled);
-            }}
-            height="15%"
-            width="15%"
-          />
+
+            <ReorderThreeOutline
+              onClick={() => {
+                setIsToggled(!isToggled);
+              }}
+              height={"2.5rem"}
+              width={"2.5rem"}
+            />
         </div>
+
 
         {isToggled && (
           <Transition
@@ -321,6 +323,7 @@ export default function NextPage() {
             )}
           </Transition>
         )}
+        
         <SimpleGrid cols={5} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
           {cards}
         </SimpleGrid>
