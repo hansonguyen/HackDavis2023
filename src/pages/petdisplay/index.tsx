@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react';
 import { Grid, Image } from '@mantine/core';
 
 
+interface Pet {
+    description: string;
+    name: string;
+    images: string[]; // Add the images property with the correct type
+    // Add other properties if needed
+  }
+
 export default function NextPage() {
   const [pets, setPets] = useState([]);
 
@@ -22,9 +29,6 @@ export default function NextPage() {
 
   return (
     <div>
-        <h1>Next.js Page</h1>
-        <h2>List of Pets:</h2>
-
         <Grid gutter="md" columns={5}>
         {pets.map((pet, index) => (
             <Image key={index} src={pet.images[0]} alt={`Image ${index}`} />
