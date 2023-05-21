@@ -35,6 +35,10 @@ const petSchema = new Schema({
         type: Boolean,
         default: true
     },
+    numDays: {
+        type: Number,
+        required: true
+    },
     images: {
         type: [String],
         required: true

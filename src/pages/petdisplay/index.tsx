@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { IconSearch, IconArrowRight, IconArrowLeft } from "@tabler/icons-react";
 import { HeartOutline } from "react-ionicons";
+import Navbar from "../../../components/Navbar";
 
 interface Pet {
   description: string;
@@ -145,11 +146,14 @@ export default function NextPage() {
   }, []);
 
   return (
-    <Container py="xl">
-      <PetSearch />
-      <SimpleGrid cols={5} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-        {cards}
-      </SimpleGrid>
-    </Container>
+    <div>
+      <Navbar />
+      <Container py="xl">
+        <PetSearch />
+        <SimpleGrid cols={5} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+          {cards}
+        </SimpleGrid>
+      </Container>
+    </div>
   );
 }
