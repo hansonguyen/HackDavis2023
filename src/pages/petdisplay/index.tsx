@@ -1,39 +1,47 @@
-import { useEffect, useState } from 'react';
-import { Grid, Image } from '@mantine/core';
+import { useEffect, useState } from "react";
+import { Grid, Image } from "@mantine/core";
+import { createStyles } from "@mantine/core";
+import { SimpleGrid, Card, Text, Container, AspectRatio } from "@mantine/core";
 import {
-  createStyles,
+  TextInput,
+  TextInputProps,
+  ActionIcon,
+  useMantineTheme,
 } from "@mantine/core";
-import {SimpleGrid, Card, Text, Container, AspectRatio } from '@mantine/core';
-import { TextInput, TextInputProps, ActionIcon, useMantineTheme } from '@mantine/core';
-import { IconSearch, IconArrowRight, IconArrowLeft } from '@tabler/icons-react';
-
+import { IconSearch, IconArrowRight, IconArrowLeft } from "@tabler/icons-react";
+import { HeartOutline } from "react-ionicons";
 
 interface Pet {
-    description: string;
-    name: string;
-    images: string[];
-  }
+  description: string;
+  name: string;
+  images: string[];
+}
 
 const useStyles = createStyles((theme) => ({
-    image:{
-      width:200
-    },
+  image: {
+    width: 200,
+  },
 
-    card: {
-      transition: 'transform 150ms ease, box-shadow 150ms ease',
-      width:'100%',
-      '&:hover': {
-        transform: 'scale(1.01)',
-        boxShadow: theme.shadows.md,
-      },
+  card: {
+    transition: "transform 150ms ease, box-shadow 150ms ease",
+    width: "100%",
+    "&:hover": {
+      transform: "scale(1.01)",
+      boxShadow: theme.shadows.md,
     },
-  
-    title: {
-      fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-      fontWeight: 600,
-    },
+  },
 
-
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 600,
+  },
+  cardDetails: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignContent: "flex-end",
+    alignItems: "flex-end",
+    alignSelf: "flex-end",
+  },
 }));
 
 export function PetSearch(props: TextInputProps) {
@@ -44,8 +52,13 @@ export function PetSearch(props: TextInputProps) {
       radius="xl"
       size="md"
       rightSection={
-        <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-          {theme.dir === 'ltr' ? (
+        <ActionIcon
+          size={32}
+          radius="xl"
+          color={theme.primaryColor}
+          variant="filled"
+        >
+          {theme.dir === "ltr" ? (
             <IconArrowRight size="1.1rem" stroke={1.5} />
           ) : (
             <IconArrowLeft size="1.1rem" stroke={1.5} />
@@ -65,43 +78,66 @@ export default function NextPage() {
   const theme = useMantineTheme();
 
   const cards = pets.map((pet, index) => (
-    <Card key={pet.name} p="md" radius="md" component="a" href="#" className={classes.card}>
+    <Card
+      key={pet.name}
+      p="md"
+      radius="md"
+      component="a"
+      href="#"
+      className={classes.card}
+    >
+      <HeartOutline
+        color={"#00000"}
+        height="20px"
+        width="20px"
+        cssClasses={classes.cardDetails}
+      />
+
       <AspectRatio ratio={1920 / 1920}>
         <Image src={pet.images[0]} />
       </AspectRatio>
       <Text className={classes.title} mt={5}>
         {pet.name}
       </Text>
+      <Text>1 week</Text>
+      <Text>North Davis</Text>
     </Card>
   ));
-  
-  const search = (props: TextInputProps) => (<TextInput
-    icon={<IconSearch size="1.1rem" stroke={1.5} />}
-    radius="xl"
-    size="md"
-    rightSection={
-      <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-        {theme.dir === 'ltr' ? (
-          <IconArrowRight size="1.1rem" stroke={1.5} />
-        ) : (
-          <IconArrowLeft size="1.1rem" stroke={1.5} />
-        )}
-      </ActionIcon>
-    }
-    placeholder="Search Pets"
-    rightSectionWidth={42}
-    {...props}
-  />);
+
+  const search = (props: TextInputProps) => (
+    <TextInput
+      icon={<IconSearch size="1.1rem" stroke={1.5} />}
+      radius="xl"
+      size="md"
+      rightSection={
+        <ActionIcon
+          size={32}
+          radius="xl"
+          color={theme.primaryColor}
+          variant="filled"
+        >
+          {theme.dir === "ltr" ? (
+            <IconArrowRight size="1.1rem" stroke={1.5} />
+          ) : (
+            <IconArrowLeft size="1.1rem" stroke={1.5} />
+          )}
+        </ActionIcon>
+      }
+      placeholder="Search Pets"
+      rightSectionWidth={42}
+      {...props}
+    />
+  );
 
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/pets');
+        const response = await fetch("http://localhost:4000/api/pets");
         const data = await response.json();
         setPets(data);
         console.log(data);
       } catch (error) {
-        console.error('Error fetching pets:', error);
+        console.error("Error fetching pets:", error);
       }
     };
 
@@ -110,9 +146,8 @@ export default function NextPage() {
 
   return (
     <Container py="xl">
-      
-      <PetSearch/>
-      <SimpleGrid cols={5} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+      <PetSearch />
+      <SimpleGrid cols={5} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
         {cards}
       </SimpleGrid>
     </Container>
