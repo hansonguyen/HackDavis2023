@@ -15,6 +15,8 @@ import {
   rem,
   Modal
 } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -55,6 +57,22 @@ interface BadgeCardProps {
 export function BadgeCard({ image, title, description, country, badges }: BadgeCardProps) {
   const { classes, theme } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
+  const [pet, setPet] = useState()
+  const router = useRouter()
+  useEffect(() => {
+    const fetchPets = async () => {
+    const id = router.query['id']
+    try {
+        const response = await fetch(`http://localhost:4000/api/pets/${id}`);
+        const data = await response.json();
+        setPet(data);
+    } catch (error) {
+        console.error("Error fetching pets:", error);
+    }
+    };  
+
+    fetchPets();
+  }, []);
   const features = badges && badges.map((badge) => (
     <Badge
       color={theme.colorScheme === 'dark' ? 'dark' : 'gray'}
@@ -66,9 +84,10 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
   ));
 
   return (
+    pet && 
     <div>
 
-      <h1> &#160;Connect with </h1>
+      <h1> &#160;Connect with {pet.name}</h1>
       
       <Card withBorder radius="lg" p="md" className={classes.card} sx={{ display: "flex", gap: "5rem" }}>
 
@@ -115,29 +134,26 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
           <h3>Let the Owner Know You're Interested!</h3>
           <p>Send the owner a message to let them know you'd like to help.</p>
         </div>
-        <div style={{ display: 'flex', flexDirection: "column"}}>
-          <p>Name:</p>
+        <div style={{ display: 'flex', flexDirection: "column", alignItems: "stretch"}}>
           <Input
+            icon={<IconAt />}
             placeholder="Name"
             radius="xl"
             size="md"/>
-          <p>Email:</p>
+
             <Input
+            icon={<IconAt />}
             placeholder="Email"
             radius="xl"
             size="md"/>
-          <p>Message:</p>
+
             <Input
+            icon={<IconAt />}
             placeholder="Message"
             radius="xl"
             size="md"/>
-          <p></p>
         </div>
-        <Group mt="xs" sx = {{ justifyContent: 'center', alignItems: "flex-end"}}>
-        <Button radius="md" style={{ flex: 1 }} onClick={close}>
-          Send Message
-        </Button>
-      </Group>  
+        
       </Modal>
 
       <Group mt="xs" sx = {{ justifyContent: 'center', alignItems: "flex-end"}}>
