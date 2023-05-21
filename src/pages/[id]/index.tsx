@@ -1,7 +1,12 @@
-import { IconHeart } from '@tabler/icons-react';
-import { useDisclosure } from '@mantine/hooks';
-import { Input } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { IconHeart } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
+import { Input } from "@mantine/core";
+import { IconAt } from "@tabler/icons-react";
+
+import { Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
+
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 import {
   Card,
@@ -13,20 +18,21 @@ import {
   ActionIcon,
   createStyles,
   rem,
-  Modal
-} from '@mantine/core';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { Pet } from '../petdisplay';
+  Modal,
+} from "@mantine/core";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { Pet } from "../petdisplay";
 
 const useStyles = createStyles((theme) => ({
   card: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor:
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
   },
 
   section: {
     borderBottom: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
@@ -38,9 +44,43 @@ const useStyles = createStyles((theme) => ({
   },
 
   label: {
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
     fontSize: theme.fontSizes.xs,
     fontWeight: 700,
+  },
+  container: {
+    backgroundImage: "linear-gradient(to right, #FFEBB9, white)",
+    height: "100vh",
+  },
+  cardContainer: {
+    width: "90vw",
+    display: "flex",
+    alignItems: "center",
+
+    justifyContent: "center",
+  },
+  cardlabel: {
+    fontSize: 30,
+    fontWeight: 500,
+    display: "flex",
+    justifyContent: "center",
+  },
+  button: {
+    backgroundColor: "#D9E7C1",
+
+    padding: "15px 32px",
+    borderWidth: 0,
+    borderRadius: 50,
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "flex-end",
+    justifyItems: "flex-end",
+  },
+  buttonContainer: {
+    marginRight: "5%",
+    marginTop: "1%",
+    display: "flex",
+    justifyContent: "flex-end",
   },
 }));
 
@@ -55,115 +95,154 @@ interface BadgeCardProps {
   }[];
 }
 
-export function BadgeCard({ image, title, description, country, badges }: BadgeCardProps) {
+export function BadgeCard({
+  image,
+  title,
+  description,
+  country,
+  badges,
+}: BadgeCardProps) {
   const { classes, theme } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
-  const [pet, setPet] = useState<Pet>()
-  const router = useRouter()
-  const id = router.query['id']
+  const [pet, setPet] = useState<Pet>();
+  const router = useRouter();
+  const id = router.query["id"];
   useEffect(() => {
     const fetchPets = async () => {
-    try {
+      try {
         const response = await fetch(`http://localhost:4000/api/pets/${id}`);
         const data = await response.json();
         setPet(data);
-    } catch (error) {
+      } catch (error) {
         console.error("Error fetching pet:", error);
-    }
-    };  
+      }
+    };
 
     fetchPets();
   }, [router]);
-  const features = badges && badges.map((badge) => (
-    <Badge
-      color={theme.colorScheme === 'dark' ? 'dark' : 'gray'}
-      key={badge.label}
-      leftSection={badge.emoji}
-    >
-      {badge.label}
-    </Badge>
-  ));
+  const features =
+    badges &&
+    badges.map((badge) => (
+      <Badge
+        color={theme.colorScheme === "dark" ? "dark" : "gray"}
+        key={badge.label}
+        leftSection={badge.emoji}
+      >
+        {badge.label}
+      </Badge>
+    ));
 
   return (
-    pet && 
-    <div>
+    pet && (
+      <div className={classes.container}>
+        <Text className={(montserrat.className, classes.cardlabel)}>
+          Connect with {pet.name}
+        </Text>
 
-      <h1> &#160;Connect with {pet.name}</h1>
-      
-      <Card withBorder radius="lg" p="md" className={classes.card} sx={{ display: "flex", gap: "5rem" }}>
+        <div className={classes.cardContainer}>
+          <Card
+            withBorder
+            radius="lg"
+            p="md"
+            className={classes.card}
+            sx={{ display: "flex", gap: "5rem" }}
+          >
+            <Card.Section>
+              {/* <Image src={pet.images[0]} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/> */}
+            </Card.Section>
 
-      <Card.Section>
-        <Image src={pet.images[0]} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/>
-      </Card.Section> 
-    
-      <Card.Section className={classes.section} mt="md">
-        <Group position="apart">
-          <Text fz="lg" fw={700}>
-            {title}Info:
-          </Text>
-        </Group>
-        
-        <Text fz="md" mt="xs">
-          {description} Name: {pet.name}
-        </Text>
-        
-        <Text fz="md" mt="xs">
-          {description} Age: {pet.age}
-        </Text>
-        
-        <Text fz="md" mt="xs">
-          {description} Breed: {pet.breed}
-        </Text>
-        
-        <Text fz="md" mt="xs">
-          {description} Pet Sitting Duration: {pet.numDays}
-        </Text>
-        
-        <Text fz="md" mt="xs">
-          {description} Location: {pet.location}
-        </Text>
-      </Card.Section>
+            <Card.Section className={classes.section} mt="md">
+              <Group position="apart">
+                <Text fz="lg" fw={700}>
+                  {title}Info:
+                </Text>
+              </Group>
 
-      <Card.Section className={classes.section} mt="lrg">  
-        <Text fz="md" mt="xs" sx={{ paddingTop: '15rem', marginLeft: -464 }}>
-          {description} Description: {pet.description}
-        </Text>
-      </Card.Section>
-      
-      <Modal opened={opened} onClose={close}>
-        <div style={{ display: 'flex', flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-          <h3>Let the Owner Know You're Interested!</h3>
-          <p>Send the owner a message to let them know you'd like to help.</p>
+              <Text fz="md" mt="xs">
+                {description} Name: {pet.name}
+              </Text>
+
+              <Text fz="md" mt="xs">
+                {description} Age: {pet.age}
+              </Text>
+
+              <Text fz="md" mt="xs">
+                {description} Breed: {pet.breed}
+              </Text>
+
+              <Text fz="md" mt="xs">
+                {description} Pet Sitting Duration: {pet.numDays}
+              </Text>
+
+              <Text fz="md" mt="xs">
+                {description} Location: {pet.location}
+              </Text>
+            </Card.Section>
+
+            <Card.Section className={classes.section} mt="lrg">
+              <Text fz="md" mt="xs" sx={{ paddingTop: "15rem" }}>
+                {description} Description: {pet.description}
+              </Text>
+            </Card.Section>
+
+            <Modal opened={opened} onClose={close}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <h3>Let the Owner Know You're Interested!</h3>
+                <p>
+                  Send the owner a message to let them know you'd like to help.
+                </p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "stretch",
+                }}
+              >
+                <Input
+                  icon={<IconAt />}
+                  placeholder="Name"
+                  radius="xl"
+                  size="md"
+                />
+
+                <Input
+                  icon={<IconAt />}
+                  placeholder="Email"
+                  radius="xl"
+                  size="md"
+                />
+
+                <Input
+                  icon={<IconAt />}
+                  placeholder="Message"
+                  radius="xl"
+                  size="md"
+                />
+              </div>
+            </Modal>
+
+            <Group
+              mt="xs"
+              sx={{ justifyContent: "center", alignItems: "flex-end" }}
+            ></Group>
+          </Card>
         </div>
-        <div style={{ display: 'flex', flexDirection: "column", alignItems: "stretch"}}>
-          <Input
-            icon={<IconAt />}
-            placeholder="Name"
-            radius="xl"
-            size="md"/>
 
-            <Input
-            icon={<IconAt />}
-            placeholder="Email"
-            radius="xl"
-            size="md"/>
-
-            <Input
-            icon={<IconAt />}
-            placeholder="Message"
-            radius="xl"
-            size="md"/>
+        <div className={classes.buttonContainer}>
+          <button className={classes.button} type="submit">
+            Connect me !
+          </button>
         </div>
-        
-      </Modal>
-
-      <Group mt="xs" sx = {{ justifyContent: 'center', alignItems: "flex-end"}}>
-        <Button radius="md" style={{ flex: 1 }} onClick={open}>
-          I'm interested!
-        </Button>
-      </Group>
-    </Card>
-  </div>
+      </div>
+    )
   );
 }
 
