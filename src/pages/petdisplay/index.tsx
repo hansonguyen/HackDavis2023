@@ -79,9 +79,18 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-export function PetSearch(props: TextInputProps) {
+export interface PetSearchProps extends TextInputProps {
+  onSearch: (searchValue: string) => void;
+}
+
+export function PetSearch(props: PetSearchProps) {
   const theme = useMantineTheme();
   const { classes } = useStyles();
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.onSearch(event.target.value);
+  };
+
   return (
     <TextInput
       className={classes.searchBar}
@@ -89,12 +98,7 @@ export function PetSearch(props: TextInputProps) {
       radius="xl"
       size="md"
       rightSection={
-        <ActionIcon
-          size={32}
-          radius="xl"
-          color="orange"
-          variant="filled"
-        >
+        <ActionIcon size={32} radius="xl" color="orange" variant="filled">
           {theme.dir === "ltr" ? (
             <IconArrowRight size="1.1rem" stroke={1.5} />
           ) : (
@@ -104,6 +108,7 @@ export function PetSearch(props: TextInputProps) {
       }
       placeholder="Search pets"
       rightSectionWidth={42}
+      onChange={handleInputChange}
       {...props}
     />
   );
@@ -159,6 +164,13 @@ export default function NextPage() {
 
     filterPets();
   }, [pets, filters]);
+  
+  const handleSearch = (searchValue: string) => {
+    const filtered = pets.filter((pet) =>
+      pet.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilteredPets(filtered);
+  };
 
   const cards = filteredPets.map((pet, index) => (
     <Card
@@ -210,7 +222,7 @@ export default function NextPage() {
       <Container py="xl">
         
         <div className={classes.searchFilterContainer}>
-          <PetSearch />
+          <PetSearch onSearch={handleSearch} />
           <ReorderThreeOutline
           onClick={() => {
             setIsToggled(!isToggled);

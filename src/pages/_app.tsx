@@ -19,8 +19,6 @@ export default function App(props: AppProps) {
                     theme={{
                         /** Put your mantine theme override here */
                         colors: {
-                            'gray': ['#C1CDC1','#C1CDC1','#C1CDC1','#C1CDC1','#C1CDC1','#C1CDC1','#C1CDC1','#C1CDC1','#C1CDC1','#C1CDC1'],
-
                             'yellow': ['#FFEBB9','#FFEBB9','#FFEBB9','#FFEBB9','#FFEBB9','#FFEBB9','#FFEBB9','#FFEBB9','#FFEBB9','#FFEBB9'],
 
                             'orange': ['#FDD1A5','#FDD1A5' ,'#FDD1A5' ,'#FDD1A5' ,'#FDD1A5' ,'#FDD1A5' ,'#FDD1A5' ,'#FDD1A5' ,'#FDD1A5' ,'#FDD1A5' ],
