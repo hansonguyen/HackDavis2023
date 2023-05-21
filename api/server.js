@@ -19,10 +19,6 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/', (req, res) => {
-    res.json({ message: 'Hello World!' })
-})
-
 // Routes
 app.use('/api/pets', petsRoutes)
 
