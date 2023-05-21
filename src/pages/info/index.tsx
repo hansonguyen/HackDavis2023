@@ -115,26 +115,29 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
           <h3>Let the Owner Know You're Interested!</h3>
           <p>Send the owner a message to let them know you'd like to help.</p>
         </div>
-        <div style={{ display: 'flex', flexDirection: "column", alignItems: "stretch"}}>
+        <div style={{ display: 'flex', flexDirection: "column"}}>
+          <p>Name:</p>
           <Input
-            icon={<IconAt />}
             placeholder="Name"
             radius="xl"
             size="md"/>
-
+          <p>Email:</p>
             <Input
-            icon={<IconAt />}
             placeholder="Email"
             radius="xl"
             size="md"/>
-
+          <p>Message:</p>
             <Input
-            icon={<IconAt />}
             placeholder="Message"
             radius="xl"
             size="md"/>
+          <p></p>
         </div>
-        
+        <Group mt="xs" sx = {{ justifyContent: 'center', alignItems: "flex-end"}}>
+        <Button radius="md" style={{ flex: 1 }} onClick={close}>
+          Send Message
+        </Button>
+      </Group>  
       </Modal>
 
       <Group mt="xs" sx = {{ justifyContent: 'center', alignItems: "flex-end"}}>
