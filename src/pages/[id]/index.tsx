@@ -1,22 +1,7 @@
-import {
-    createStyles,
-  } from "@mantine/core";
-
-const useStyles = createStyles((theme) => ({
-    container:{
-
-    }
-
-
-
-}));
-
-export default function User() {
-    const { classes } = useStyles();
+export default function Listing() {
     return (
-      <div className={classes.container}>
-        
+      <div>
+        <h1>hello</h1>
       </div>
     )
   }
-  
