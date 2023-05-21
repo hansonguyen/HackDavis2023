@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     NumberInput,
     Select,
@@ -22,6 +22,9 @@ import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react'
 import { useRouter } from 'next/router'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import Navbar from '../../../../components/Navbar'
+import { storage } from "../../firebase"
+import { ref, uploadBytes, deleteObject, getDownloadURL } from "firebase/storage"
+import { v4 } from "uuid"
 
 export const speciesData = [
     { value: 'Dog', label: 'Dog' },
@@ -66,7 +69,7 @@ export default function CreateListing() {
         species: '',
         breed: '',
         age: 0,
-        owner: user.sub,
+        owner: user ? user.sub : '',
         location: '',
         availability: true,
         numDays: 0,
@@ -74,6 +77,7 @@ export default function CreateListing() {
     })
 
     const handleSubmit = async () => {
+        console.log(form)
         try {
             await fetch('http://localhost:4000/api/pets/', {
                 body: JSON.stringify(form),
@@ -88,26 +92,42 @@ export default function CreateListing() {
             console.log(error)
         }
     }
+    useEffect(() => {
+        console.log(form)
+    }, [form])
 
-    const onSelectFile = (input: FileWithPath[]) => {
+    const onSelectFile = async (input: FileWithPath[]) => {
         if (input.length + form.images.length > 5) {
             return
         }
-        const images = input.map((file) => {
-            return URL.createObjectURL(file)
+        const images = input.map(async (file) => {
+            const imageRef = ref(storage, `images/${file.name + v4()}`)
+            uploadBytes(imageRef, file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setForm({ ...form, images: [...form.images, url] })
+                })
+            })
         })
-        setForm({ ...form, images: images })
     }
 
     const deleteImage = (image) => {
-        setForm({
-            ...form,
-            images: form.images.filter(
-                (e) => e !== image
-            )
-        })
-        URL.revokeObjectURL(image);
-    }
+        // Remove the image from Firebase Storage
+        const fileName = decodeURIComponent(image).split("/images/")[1].split("?")[0]
+        const imageRef = ref(storage, `images/${fileName}`)
+        deleteObject(imageRef)
+          .then(() => {
+            console.log(`Successfully deleted image: ${image}`)
+            // Update the form state by removing the deleted image
+            setForm({
+              ...form,
+              images: form.images.filter((e) => e !== image),
+            })
+          })
+          .catch((error) => {
+            console.log(`Error deleting image: ${image}`, error)
+          });
+      };
+      
 
     return (
         <div>
