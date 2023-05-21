@@ -2,11 +2,11 @@ import Navbar from "../../components/Navbar";
 import { Text } from "@mantine/core";
 import { createStyles } from "@mantine/core";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 //font styles
 import { Montserrat } from "next/font/google";
 import { Inter } from "next/font/google";
-
+import cat from "./transparent.jpg";
 const montserrat = Montserrat({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
@@ -69,6 +69,9 @@ export default function Home() {
       <button className={classes.button} type="button" onClick={nav}>
         Get Started!
       </button>
+
+      <Image src={cat} alt="cat" style={{ backgroundColor: "transparent" }} />
+      {/* <img src="./transparent.jpg" /> */}
     </div>
   );
 }
