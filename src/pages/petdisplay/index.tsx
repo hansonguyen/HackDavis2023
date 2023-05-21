@@ -16,22 +16,25 @@ import { Transition, NumberInput } from '@mantine/core';
 import {speciesData, locationData} from '../pets/create/index'
 
 export interface Pet {
+  species: string;
+  breed: string;
   description: string;
   name: string;
   images: string[];
   numDays: number;
   location: string;
+  age: number;
 }
 
 
 export interface FiltersFace {
-  species: string;
-  breed: string;
+  species: string[];
+  breed: string[];
   minDays: number;
   maxDays: number;
   minAge: number;
   maxAge: number;
-  location: string;
+  location: string[];
 }
 
 
@@ -76,9 +79,18 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-export function PetSearch(props: TextInputProps) {
+export interface PetSearchProps extends TextInputProps {
+  onSearch: (searchValue: string) => void;
+}
+
+export function PetSearch(props: PetSearchProps) {
   const theme = useMantineTheme();
   const { classes } = useStyles();
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.onSearch(event.target.value);
+  };
+
   return (
     <TextInput
       className={classes.searchBar}
@@ -86,12 +98,7 @@ export function PetSearch(props: TextInputProps) {
       radius="xl"
       size="md"
       rightSection={
-        <ActionIcon
-          size={32}
-          radius="xl"
-          color="orange"
-          variant="filled"
-        >
+        <ActionIcon size={32} radius="xl" color="orange" variant="filled">
           {theme.dir === "ltr" ? (
             <IconArrowRight size="1.1rem" stroke={1.5} />
           ) : (
@@ -101,6 +108,7 @@ export function PetSearch(props: TextInputProps) {
       }
       placeholder="Search pets"
       rightSectionWidth={42}
+      onChange={handleInputChange}
       {...props}
     />
   );
@@ -108,19 +116,63 @@ export function PetSearch(props: TextInputProps) {
 
 export default function NextPage() {
   const [pets, setPets] = useState<Pet[]>([]);
-  const [filters, setFilters] = useState<FiltersFace>(
-    {species: '',
-    breed: '',
+  const [filteredPets, setFilteredPets] = useState<Pet[]>([]);
+  const [filters, setFilters] = useState<FiltersFace>({
+    species: [],
+    breed: [],
     minAge: 0,
     maxAge: 0,
     minDays: 0,
     maxDays: 0,
-    location: ''}
-  );
+    location: [],
+  });
   const { classes } = useStyles();
   const [isToggled, setIsToggled] = useState(false);
 
-  const cards = pets.map((pet, index) => (
+  useEffect(() => {
+    const filterPets = () => {
+      let filtered = pets;
+      if (filters.species.length > 0) {
+        filtered = filtered.filter((pet) =>
+          filters.species.includes(pet.species)
+        );
+      }
+      if (filters.breed.length > 0) {
+        filtered = filtered.filter((pet) =>
+          filters.breed.includes(pet.breed)
+        );
+      }
+      if (filters.minAge > 0) {
+        filtered = filtered.filter((pet) => pet.age >= filters.minAge);
+      }
+      if (filters.maxAge > 0) {
+        filtered = filtered.filter((pet) => pet.age <= filters.maxAge);
+      }
+      if (filters.minDays > 0) {
+        filtered = filtered.filter((pet) => pet.numDays >= filters.minDays);
+      }
+      if (filters.maxDays > 0) {
+        filtered = filtered.filter((pet) => pet.numDays <= filters.maxDays);
+      }
+      if (filters.location.length > 0) {
+        filtered = filtered.filter((pet) =>
+          filters.location.includes(pet.location)
+        );
+      }
+      setFilteredPets(filtered);
+    };
+
+    filterPets();
+  }, [pets, filters]);
+  
+  const handleSearch = (searchValue: string) => {
+    const filtered = pets.filter((pet) =>
+      pet.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilteredPets(filtered);
+  };
+
+  const cards = filteredPets.map((pet, index) => (
     <Card
       key={pet.name}
       p="md"
@@ -170,7 +222,7 @@ export default function NextPage() {
       <Container py="xl">
         
         <div className={classes.searchFilterContainer}>
-          <PetSearch />
+          <PetSearch onSearch={handleSearch} />
           <ReorderThreeOutline
           onClick={() => {
             setIsToggled(!isToggled);
@@ -182,17 +234,23 @@ export default function NextPage() {
         {isToggled &&  
           <Transition mounted={isToggled} transition="slide-up" duration={500} timingFunction="ease">
             {(styles) => 
-            <div className={classes.filterContainer}>
+            <div className={classes.filterContainer} style={styles}>
                 <MultiSelect
                 data={speciesData}
                 label="Species"
+                searchable
                 placeholder="Pick species"
+                value={filters.species}
+                color="yellow"
+                onChange={(value) => setFilters({ ...filters, species: value })}
                 />
 
                 <MultiSelect
                 data={locationData}
                 label="Location"
                 placeholder="Pick area"
+                value={filters.location}
+                onChange={(value) => setFilters({ ...filters, location: value })}
                 />
 
               <div>
