@@ -15,6 +15,11 @@ import { MultiSelect } from "@mantine/core";
 import { Transition, NumberInput } from "@mantine/core";
 import { speciesData, locationData } from "../pets/create/index";
 
+import { Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
+
+const montserrat = Montserrat({ subsets: ["latin"] });
+
 export interface Pet {
   species: string;
   breed: string;
@@ -70,6 +75,7 @@ const useStyles = createStyles((theme) => ({
   },
   searchBar: {
     width: "90%",
+    marginBottom: "3%",
   },
   filterContainer: {
     padding: "5%",
@@ -77,6 +83,7 @@ const useStyles = createStyles((theme) => ({
 
   container: {
     backgroundImage: "linear-gradient(to right, #FFEBB9, white)",
+
     height: "100vh",
   },
 }));
