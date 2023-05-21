@@ -37,6 +37,8 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
     paddingBottom: theme.spacing.md,
+    marginRight: "10%",
+    width: "20vw",
   },
 
   like: {
@@ -56,7 +58,7 @@ const useStyles = createStyles((theme) => ({
     width: "90vw",
     display: "flex",
     alignItems: "center",
-
+    alignSelf: "center",
     justifyContent: "center",
   },
   cardlabel: {
@@ -67,8 +69,7 @@ const useStyles = createStyles((theme) => ({
   },
   button: {
     backgroundColor: "#D9E7C1",
-
-    padding: "15px 32px",
+    padding: "7px 20px",
     borderWidth: 0,
     borderRadius: 50,
     display: "flex",
@@ -81,6 +82,11 @@ const useStyles = createStyles((theme) => ({
     marginTop: "1%",
     display: "flex",
     justifyContent: "flex-end",
+  },
+  trial: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   },
 }));
 
@@ -139,107 +145,144 @@ export function BadgeCard({
           Connect with {pet.name}
         </Text>
 
-        <div className={classes.cardContainer}>
-          <Card
-            withBorder
-            radius="lg"
-            p="md"
-            className={classes.card}
-            sx={{ display: "flex", gap: "5rem" }}
-          >
-            <Card.Section>
-              {/* <Image src={pet.images[0]} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/> */}
-            </Card.Section>
+        <div className={classes.trial}>
+          <div className={classes.cardContainer}>
+            <Card
+              withBorder
+              radius="lg"
+              p="md"
+              className={classes.card}
+              sx={{ display: "flex", gap: "20%" }}
+            >
+              <Card.Section>
+                {pet.images && (
+                  <Image
+                    src={pet.images[0]}
+                    alt={title}
+                    height={210}
+                    width={210}
+                    sx={{
+                      width: "20vw",
+                      marginLeft: "15%",
+                      marginTop: "20%",
+                      alignContent: "center",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  />
+                )}
 
-            <Card.Section className={classes.section} mt="md">
-              <Group position="apart">
-                <Text fz="lg" fw={700}>
-                  {title}Info:
+                <Text
+                  fz="md"
+                  mt="xs"
+                  sx={{
+                    width: "20vw",
+                    marginLeft: "15%",
+                    alignContent: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {description} Description: {pet.description}
                 </Text>
-              </Group>
+              </Card.Section>
 
-              <Text fz="md" mt="xs">
-                {description} Name: {pet.name}
-              </Text>
+              <Card.Section
+                className={classes.section}
+                mt="md"
+                sx={{ marginBottom: "5%" }}
+              >
+                <Group position="apart">
+                  <Text fz="lg" fw={700} sx={{ width: "20vw" }}>
+                    {title}Information
+                  </Text>
+                </Group>
 
-              <Text fz="md" mt="xs">
-                {description} Age: {pet.age}
-              </Text>
+                <Text fz="md" mt="xs">
+                  {description} Name: {pet.name}
+                </Text>
 
-              <Text fz="md" mt="xs">
-                {description} Breed: {pet.breed}
-              </Text>
+                <Text fz="md" mt="xs">
+                  {description} Age: {pet.age}
+                </Text>
 
-              <Text fz="md" mt="xs">
-                {description} Pet Sitting Duration: {pet.numDays}
-              </Text>
+                <Text fz="md" mt="xs">
+                  {description} Breed: {pet.breed}
+                </Text>
 
-              <Text fz="md" mt="xs">
-                {description} Location: {pet.location}
-              </Text>
-            </Card.Section>
+                <Text fz="md" mt="xs">
+                  {description} Pet Sitting Duration: {pet.numDays}
+                </Text>
 
-            <Card.Section className={classes.section} mt="lrg">
-              <Text fz="md" mt="xs" sx={{ paddingTop: "15rem" }}>
-                {description} Description: {pet.description}
-              </Text>
-            </Card.Section>
+                <Text fz="md" mt="xs">
+                  {description} Location: {pet.location}
+                </Text>
+              </Card.Section>
 
-            <Modal opened={opened} onClose={close}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
+              <Modal opened={opened} onClose={close}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h3>Let the Owner Know You're Interested!</h3>
+                  <p>
+                    Send the owner a message to let them know you'd like to
+                    help.
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "stretch",
+                  }}
+                >
+                  <Input
+                    icon={<IconAt />}
+                    placeholder="Name"
+                    radius="xl"
+                    size="md"
+                  />
+
+                  <Input
+                    icon={<IconAt />}
+                    placeholder="Email"
+                    radius="xl"
+                    size="md"
+                  />
+
+                  <Input
+                    icon={<IconAt />}
+                    placeholder="Message"
+                    radius="xl"
+                    size="md"
+                  />
+                </div>
+              </Modal>
+
+              <Group
+                sx={{
                   justifyContent: "center",
-                  alignItems: "center",
+                  alignItems: "flex-end",
+                  marginLeft: "-70%",
                 }}
               >
-                <h3>Let the Owner Know You're Interested!</h3>
-                <p>
-                  Send the owner a message to let them know you'd like to help.
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "stretch",
-                }}
-              >
-                <Input
-                  icon={<IconAt />}
-                  placeholder="Name"
-                  radius="xl"
-                  size="md"
-                />
-
-                <Input
-                  icon={<IconAt />}
-                  placeholder="Email"
-                  radius="xl"
-                  size="md"
-                />
-
-                <Input
-                  icon={<IconAt />}
-                  placeholder="Message"
-                  radius="xl"
-                  size="md"
-                />
-              </div>
-            </Modal>
-
-            <Group
-              mt="xs"
-              sx={{ justifyContent: "center", alignItems: "flex-end" }}
-            ></Group>
-          </Card>
-        </div>
-
-        <div className={classes.buttonContainer}>
-          <button className={classes.button} type="submit">
-            Connect me !
-          </button>
+                <Button
+                  className={classes.button}
+                  sx={{ marginBottom: "-5%" }}
+                  // onClick={alert(
+                  //   "We have sent your enquiry to the owner! Please check your email for a response in the next 3-5 days!"
+                  // )}
+                >
+                  Connect me !
+                </Button>
+              </Group>
+            </Card>
+          </div>
         </div>
       </div>
     )
