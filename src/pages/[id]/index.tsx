@@ -93,7 +93,7 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
       <Card withBorder radius="lg" p="md" className={classes.card} sx={{ display: "flex", gap: "5rem" }}>
 
       <Card.Section>
-        <Image src={pet.images[0]} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/>
+        {pet.images && <Image src={pet.images[0]} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/>}
       </Card.Section> 
     
       <Card.Section className={classes.section} mt="md">
