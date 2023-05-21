@@ -17,6 +17,7 @@ import {
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Pet } from '../petdisplay';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -57,22 +58,22 @@ interface BadgeCardProps {
 export function BadgeCard({ image, title, description, country, badges }: BadgeCardProps) {
   const { classes, theme } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
-  const [pet, setPet] = useState()
+  const [pet, setPet] = useState<Pet>()
   const router = useRouter()
+  const id = router.query['id']
   useEffect(() => {
     const fetchPets = async () => {
-    const id = router.query['id']
     try {
         const response = await fetch(`http://localhost:4000/api/pets/${id}`);
         const data = await response.json();
         setPet(data);
     } catch (error) {
-        console.error("Error fetching pets:", error);
+        console.error("Error fetching pet:", error);
     }
     };  
 
     fetchPets();
-  }, []);
+  }, [router]);
   const features = badges && badges.map((badge) => (
     <Badge
       color={theme.colorScheme === 'dark' ? 'dark' : 'gray'}
