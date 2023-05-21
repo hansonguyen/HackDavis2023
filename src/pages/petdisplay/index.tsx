@@ -73,19 +73,20 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "center",
     alignContent: "center",
     width: "100%",
+    marginBottom:"2%",
   },
   searchBar: {
     width: "90%",
-    marginBottom: "3%",
   },
   filterContainer: {
-    padding: "5%",
-    height:"200vh"
+    paddingLeft:"5%",
+    paddingRight: "5%",
+    paddingBottom:"5%"
+
   },
 
   container: {
     backgroundImage: "linear-gradient(to right, #FFEBB9, white)",
-    height: "200vh",
   },
 }));
 
