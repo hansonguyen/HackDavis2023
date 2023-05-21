@@ -26,7 +26,7 @@ import { storage } from "../../firebase"
 import { ref, uploadBytes, deleteObject, getDownloadURL } from "firebase/storage"
 import { v4 } from "uuid"
 
-const speciesData = [
+export const speciesData = [
     { value: 'Dog', label: 'Dog' },
     { value: 'Cat', label: 'Cat' },
     { value: 'Fish', label: 'Fish' },
@@ -36,7 +36,7 @@ const speciesData = [
     { value: 'Rat', label: 'Rat' }
 ]
 
-const locationData = [
+export const locationData = [
     { value: 'North Davis', label: 'North Davis' },
     { value: 'South Davis', label: 'South Davis' },
     { value: 'West Davis', label: 'West Davis' },
