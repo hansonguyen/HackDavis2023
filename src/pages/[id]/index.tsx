@@ -93,7 +93,7 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
       <Card withBorder radius="lg" p="md" className={classes.card} sx={{ display: "flex", gap: "5rem" }}>
 
       <Card.Section>
-        <Image src={image} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/>
+        <Image src={pet.images[0]} alt={title} height={210} width={210} sx={{ padding: "2rem" }}/>
       </Card.Section> 
     
       <Card.Section className={classes.section} mt="md">
@@ -104,29 +104,29 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
         </Group>
         
         <Text fz="md" mt="xs">
-          {description} Name:
+          {description} Name: {pet.name}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Age:
+          {description} Age: {pet.age}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Breed:
+          {description} Breed: {pet.breed}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Pet Sitting Duration:
+          {description} Pet Sitting Duration: {pet.numDays}
         </Text>
         
         <Text fz="md" mt="xs">
-          {description} Location:
+          {description} Location: {pet.location}
         </Text>
       </Card.Section>
 
       <Card.Section className={classes.section} mt="lrg">  
         <Text fz="md" mt="xs" sx={{ paddingTop: '15rem', marginLeft: -464 }}>
-          {description} Description:
+          {description} Description: {pet.description}
         </Text>
       </Card.Section>
       
