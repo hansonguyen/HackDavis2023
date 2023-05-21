@@ -56,7 +56,7 @@ export function PetSearch(props: TextInputProps) {
         <ActionIcon
           size={32}
           radius="xl"
-          color={theme.primaryColor}
+          color="orange"
           variant="filled"
         >
           {theme.dir === "ltr" ? (
