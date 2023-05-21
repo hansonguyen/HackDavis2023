@@ -23,10 +23,10 @@ const getSinglePet = async (req, res) => {
 
 // POST new
 const createPet = async (req, res) => {
-    const { name, description, species, breed, age, owner, location, availability, images } = req.body
+    const { name, description, species, breed, age, owner, location, availability, numDays, images } = req.body
 
     try {
-        const pet = await Pet.create({ name, description, species, breed, age, owner, location, availability, images })
+        const pet = await Pet.create({ name, description, species, breed, age, owner, location, availability, numDays, images })
         res.status(200).json(pet)
     }
     catch (error) {
