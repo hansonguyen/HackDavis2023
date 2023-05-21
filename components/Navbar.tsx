@@ -41,6 +41,16 @@ function Navbar() {
         router.push('/user')
     }
 
+    const handleList = (e) => {
+        e.preventDefault()
+        if (user) {
+            router.push('/pets/create')
+        }
+        else {
+            router.push('/api/auth/login')
+        }
+    }
+
     return (
         <Header
             height={rem(84)}
@@ -54,7 +64,8 @@ function Navbar() {
             <h1><a href='/' style={{ color: "black", textDecoration: "none" }}>Pawfect Sitters</a></h1>
             {!user && <Button onClick={handleLogin}>Login</Button>}
             {user && (
-                <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                    <Button onClick={handleList}>List Pet</Button>
                     <Menu shadow="md" width={200}>
                         <Menu.Target>
                             <ActionIcon>
