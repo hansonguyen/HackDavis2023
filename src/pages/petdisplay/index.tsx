@@ -82,7 +82,6 @@ const useStyles = createStyles((theme) => ({
     paddingLeft:"5%",
     paddingRight: "5%",
     paddingBottom:"5%"
-
   },
 
   container: {

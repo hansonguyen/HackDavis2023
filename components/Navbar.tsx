@@ -23,6 +23,8 @@ import { ClassNames } from "@emotion/react";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
+
+
 function Navbar() {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
@@ -62,6 +64,8 @@ function Navbar() {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "1rem",
+        paddingLeft: "10%",
+        paddingRight: "10%",
         backgroundImage: "linear-gradient(to right, #FFEBB9, white)",
         borderWidth: 0,
       }}

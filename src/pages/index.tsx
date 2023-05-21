@@ -3,10 +3,12 @@ import { Text } from "@mantine/core";
 import { createStyles } from "@mantine/core";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import React, { useState } from 'react';
 //font styles
 import { Montserrat } from "next/font/google";
 import { Inter } from "next/font/google";
-import cat from "./transparent.jpg";
+import cat from "./cat.png";
+import angy from "./angy.png";
 const montserrat = Montserrat({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,6 +53,7 @@ export default function Home() {
   const nav = () => {
     router.push("/petdisplay");
   };
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className={classes.container}>
@@ -70,7 +73,18 @@ export default function Home() {
         Get Started!
       </button>
 
-      <Image src={cat} alt="cat" style={{ backgroundColor: "transparent" }} />
+      <Image
+        src={isHovered ? angy : cat}
+        alt="Cat"
+        style={{ backgroundColor: 'transparent', marginLeft: '5%' }}
+        onMouseEnter={() => {
+          setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+        }}
+      />
+
       {/* <img src="./transparent.jpg" /> */}
     </div>
   );
