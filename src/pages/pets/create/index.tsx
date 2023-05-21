@@ -99,6 +99,16 @@ export default function CreateListing() {
         setForm({ ...form, images: images })
     }
 
+    const deleteImage = (image) => {
+        setForm({
+            ...form,
+            images: form.images.filter(
+                (e) => e !== image
+            )
+        })
+        URL.revokeObjectURL(image);
+    }
+
     return (
         <div>
             <Navbar />
@@ -153,14 +163,7 @@ export default function CreateListing() {
                             <div key={image}>
                                 <Image src={image} width={200} height={200} />
                                 <Button
-                                    onClick={() =>
-                                        setForm({
-                                            ...form,
-                                            images: form.images.filter(
-                                                (e) => e !== image
-                                            )
-                                        })
-                                    }
+                                    onClick={() => deleteImage(image)}
                                 >
                                     Delete
                                 </Button>
