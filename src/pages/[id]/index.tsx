@@ -17,6 +17,7 @@ import {
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Pet } from '../petdisplay';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -57,7 +58,7 @@ interface BadgeCardProps {
 export function BadgeCard({ image, title, description, country, badges }: BadgeCardProps) {
   const { classes, theme } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
-  const [pet, setPet] = useState()
+  const [pet, setPet] = useState<Pet>()
   const router = useRouter()
   const id = router.query['id']
   useEffect(() => {
